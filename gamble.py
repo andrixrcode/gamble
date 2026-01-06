@@ -10,6 +10,12 @@ ganhos_status = 0
 perdas_status = 0
 giros_status = 0
 
+giros_ganhos = 0
+
+derrotas = 0
+vitoria_normal = 0
+jackpots = 0
+
 while True:
     try:    
         dinheiro_entrada = float(input("digite o valor monetário que deseja inserir para poder jogar: "))
@@ -35,6 +41,11 @@ def mostrar_status():
     print(f"ganhos totais: R${ganhos_status:.2f}")
     print(f"perdas totais: R${perdas_status:.2f}")
     print(f"giros totais: {giros_status}")
+    print(f"winrate: {(giros_ganhos/giros_status * 100):.2f}% \n")
+
+    print(f"derrotas: {derrotas}")
+    print(f"vitórias normais: {vitoria_normal}")
+    print(f"jackpot: {jackpots}")
 
     resposta = input("\n pressione qualquer tecla pra sair ")
     
@@ -51,6 +62,10 @@ def gamble():
     global ganhos_status
     global perdas_status
     global giros_status
+    global giros_ganhos
+    global derrotas
+    global vitoria_normal 
+    global jackpots
 
     figuras_choice = []
 
@@ -68,6 +83,7 @@ def gamble():
                 mensagem = ""
 
                 if len(contagem) == 3:
+                    derrotas += 1
                     ganho = 3
                     perdas_status += ganho
                     dinheiro -= ganho
@@ -76,12 +92,16 @@ def gamble():
 
                     print(figuras_choice, "\n" , mensagem)
                 elif len(contagem) == 2:
+                    vitoria_normal += 1
+                    giros_ganhos += 1
                     ganho = 0.5
                     ganhos_status += ganho
                     dinheiro += ganho
 
                     mensagem = f"quase! voce esta com sorte! ganho normal! +{ganho:.2f} \n"
                 else:
+                    jackpots += 1
+                    giros_ganhos += 1
                     ganho = 3
                     ganhos_status += ganho
                     dinheiro += ganho
